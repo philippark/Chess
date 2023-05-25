@@ -56,13 +56,16 @@ def main():
                     move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board)
                     print(move.getChessNotation())
 
-                    if move in validMoves:
-                        gs.makeMove(move)
-                        moveMade = True
+                    for i in range(len(validMoves)):
+                        if move == validMoves[i]:
+                            gs.makeMove(validMoves[i])
+                            moveMade = True
+                            sqSelected = ()
+                            playerClicks = []
+                    
+                    if not moveMade:
+                        playerClicks = [sqSelected]
 
-                    sqSelected = ()
-                    playerClicks = []
-            
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_u:
                     gs.undoMove()
@@ -87,8 +90,11 @@ def drawGameState(screen, gs):
 
 
 def drawBoard(screen):
-    light = (234, 235, 200)
-    dark = (119,154,88)
+    #light = (234, 235, 200)
+    #dark = (119,154,88)
+
+    light = pygame.Color("white")
+    dark = pygame.Color("grey")
     
     for r in range(DIMENSION):
         for c in range(DIMENSION):
